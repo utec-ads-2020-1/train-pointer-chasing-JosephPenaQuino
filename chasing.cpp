@@ -1,16 +1,18 @@
 #include "chasing.h"
 
+#define parse_(x) x.erase(remove_if(x.begin(), x.end(), isspace), x.end());
+#define correct_syntax(str, m,x,n,y) sscanf(str.c_str(), "%c%d%c%d", &m, &x, &n, &y) != EOF  && str.length() == 4
+
 void chasing(int **A[], int a, int *B[], int b, int C[], int c)
 {
 	std::string current_string;
-	current_string.clear();
 	while(getline(std::cin, current_string))
 	{
 		int correctness = 0;
-		char m=10, n=10;
-		int x=10, y=10;
-		current_string.erase(remove_if(current_string.begin(), current_string.end(), isspace), current_string.end());
-		if (sscanf(current_string.c_str(), "%c%d%c%d", &m, &x, &n, &y) != EOF  && current_string.length() == 4)
+		char m, n;
+		int x, y;
+		parse_(current_string);
+		if (correct_syntax(current_string, m, x, n, y))
 		{
 			if (m == 'A' && n == 'B' && x < a && y < b)
 			{
@@ -25,6 +27,5 @@ void chasing(int **A[], int a, int *B[], int b, int C[], int c)
 		}
 		
 		std::cout << correctness << std::endl;
-		current_string.clear();
 	}	
 }
